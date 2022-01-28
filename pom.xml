@@ -8,13 +8,13 @@
 		<version>2.6.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.spring.user.authentication</groupId>
+	<groupId>com.anda.user.auth</groupId>
 	<artifactId>spring-user-auth</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-user-auth</name>
 	<description>Project for user authentication with SpringBoot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>10</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

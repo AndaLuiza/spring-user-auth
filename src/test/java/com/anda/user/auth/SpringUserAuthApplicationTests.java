@@ -1,4 +1,4 @@
-package com.spring.user.authentication;
+package com.anda.user.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
