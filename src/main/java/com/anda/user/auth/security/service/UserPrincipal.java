@@ -42,7 +42,7 @@ public class UserPrincipal implements UserDetails
     {
         return authorities;
     }
-    
+
     @Override
     public String getPassword()
     {
@@ -77,5 +77,15 @@ public class UserPrincipal implements UserDetails
     public boolean isEnabled()
     {
         return true;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 }
