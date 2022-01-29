@@ -3,6 +3,7 @@ package com.anda.user.auth.security.jwt;
 import com.anda.user.auth.security.service.MyUserDetailsService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,12 +22,13 @@ import java.util.Optional;
  * Request filter to validate jwt token in the header of each request and to set the authentication data
  */
 @Slf4j
-@AllArgsConstructor
 public class JwtTokenRequestFilter extends OncePerRequestFilter
 {
-    private final JwtTokenUtils jwtTokenUtils;
+    @Autowired
+    private JwtTokenUtils jwtTokenUtils;
 
-    private final MyUserDetailsService myUserDetailsService;
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException
