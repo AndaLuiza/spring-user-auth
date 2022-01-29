@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "2f51fbb2-489d-462b-b79d-885105eabba8",
+		"name": "UserAuthentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "valid_login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"test1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				},
+				"description": "Valid login request"
+			},
+			"response": []
+		},
+		{
+			"name": "logout_with_valid_token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY0MzQ4Nzk2NCwiZXhwIjoxNjQzNTA1OTY0fQ.Q2yJBwpKqP2Hg-X3nILhMvcjUyQVuPs3dnI_VvEwgpL6QXIQqZUaFEhSqeYodvdpaneok0hig6ITjTTWVVN_2A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"logout"
+					]
+				},
+				"description": "Valid login request"
+			},
+			"response": []
+		},
+		{
+			"name": "current_user_with_valid_token",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY0MzQ4Nzk2NCwiZXhwIjoxNjQzNTA1OTY0fQ.Q2yJBwpKqP2Hg-X3nILhMvcjUyQVuPs3dnI_VvEwgpL6QXIQqZUaFEhSqeYodvdpaneok0hig6ITjTTWVVN_2A",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/currentUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"currentUser"
+					]
+				},
+				"description": "Valid login request"
+			},
+			"response": []
+		},
+		{
+			"name": "current_user_with_invalid_token_401",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer OiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY0MzQ4MTk4NCwiZXhwIjoxNjQzNDk5OTg0fQ.dDAK_DTrUtJHTx_Dia2KH379onnZ3gF95bGHESuLPRc7iAesKyJAmxlFTZ0fArdQiMzRplD6yvAnUXtvAGGdyA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/currentUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"currentUser"
+					]
+				},
+				"description": "Valid login request"
+			},
+			"response": []
+		},
+		{
+			"name": "current_user_no_token_401",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/currentUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"currentUser"
+					]
+				},
+				"description": "Valid login request"
+			},
+			"response": []
+		},
+		{
+			"name": "logout_with_invalid_token_401",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTY0MzQ4MTk4NCwiZXhwIjoxNjQzNDk5OTg0fQ.dDAK_DTrUtJHTx_Dia2KH379onnZ3gF95bGHESuLPRc7iAesKyJAmxlFTZ0fArdQiMzRplD6yvAnUXtvAGG",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"logout"
+					]
+				},
+				"description": "Valid login request"
+			},
+			"response": []
+		},
+		{
+			"name": "login_401_bad_credentials",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"test1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				},
+				"description": "Valid login request"
+			},
+			"response": []
+		}
+	]
+}
