@@ -12,6 +12,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The User Principal class
+ * Holds the user data loaded for authentication process
+ */
 @AllArgsConstructor
 @EqualsAndHashCode
 public class UserPrincipal implements UserDetails
@@ -82,10 +86,5 @@ public class UserPrincipal implements UserDetails
     public String getEmail()
     {
         return email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
     }
 }
