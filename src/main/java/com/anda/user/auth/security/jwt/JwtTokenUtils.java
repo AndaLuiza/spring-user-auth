@@ -46,12 +46,12 @@ public class JwtTokenUtils
     }
 
     /**
-     * Checks if a jwt token is valid
+     * Parses the jwt token and checks if it is a valid one
      *
      * @param token the access token
      * @return if valid
      */
-    public boolean validateJwtToken(String token)
+    public boolean isValidJwtToken(String token)
     {
         try
         {
