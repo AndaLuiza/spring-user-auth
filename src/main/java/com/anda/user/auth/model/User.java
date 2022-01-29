@@ -23,7 +23,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User
+{
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,9 +41,9 @@ public class User {
     private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(	name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName ="id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName ="id"))
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
 
 }

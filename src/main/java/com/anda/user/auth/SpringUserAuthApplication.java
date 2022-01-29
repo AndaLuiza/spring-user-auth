@@ -12,21 +12,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class SpringUserAuthApplication implements CommandLineRunner {
+public class SpringUserAuthApplication implements CommandLineRunner
+{
 
-	@Autowired
-	RoleRepository roleRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringUserAuthApplication.class, args);
-	}
+    public static void main(String[] args)
+    {
+        SpringApplication.run(SpringUserAuthApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		var roles = new ArrayList<Role>();
-		Arrays.asList(RoleEnum.values()).forEach(roleEnum -> roles.add(new Role(roleEnum)));
-		roleRepository.saveAll(roles);
+    @Override
+    public void run(String... args) throws Exception
+    {
+        var roles = new ArrayList<Role>();
+        Arrays.asList(RoleEnum.values()).forEach(roleEnum -> roles.add(new Role(roleEnum)));
+        roleRepository.saveAll(roles);
 
-		roleRepository.findAll().forEach(System.out::println);
-	}
+        roleRepository.findAll().forEach(System.out::println);
+    }
 }

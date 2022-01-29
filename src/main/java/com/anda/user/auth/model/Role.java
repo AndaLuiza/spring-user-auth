@@ -21,7 +21,8 @@ import javax.persistence.Table;
 @ToString
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role
+{
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +33,8 @@ public class Role {
     @Column(nullable = false)
     private RoleEnum name;
 
-    public Role(RoleEnum name) {
+    public Role(RoleEnum name)
+    {
         this.name = name;
     }
 }
