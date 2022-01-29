@@ -2,7 +2,7 @@ package com.anda.user.auth;
 
 import com.anda.user.auth.model.Role;
 import com.anda.user.auth.model.RoleEnum;
-import com.anda.user.auth.repository.RoleRepository;
+import com.anda.user.auth.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +16,7 @@ public class SpringUserAuthApplication implements CommandLineRunner
 {
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleService roleServiceImpl;
 
     public static void main(String[] args)
     {
@@ -28,8 +28,8 @@ public class SpringUserAuthApplication implements CommandLineRunner
     {
         var roles = new ArrayList<Role>();
         Arrays.asList(RoleEnum.values()).forEach(roleEnum -> roles.add(new Role(roleEnum)));
-        roleRepository.saveAll(roles);
+        roleServiceImpl.saveAll(roles);
 
-        roleRepository.findAll().forEach(System.out::println);
+        roleServiceImpl.findAll().forEach(System.out::println);
     }
 }
