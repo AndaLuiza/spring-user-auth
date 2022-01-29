@@ -2,6 +2,8 @@ package com.anda.user.auth.controller;
 
 import com.anda.user.auth.dto.AuthRequest;
 import com.anda.user.auth.dto.UserInfoResponse;
+import com.anda.user.auth.model.Token;
+import com.anda.user.auth.repository.TokenRepository;
 import com.anda.user.auth.security.jwt.JwtTokenUtils;
 import com.anda.user.auth.security.service.MyUserDetailsService;
 import com.anda.user.auth.security.service.UserPrincipal;
@@ -34,6 +36,9 @@ public class AuthController
     @Autowired
     private JwtTokenUtils jwtTokenUtils;
 
+    @Autowired
+    private TokenRepository tokenRepository;
+
     @PostMapping("login")
     public ResponseEntity<UserInfoResponse> authenticate(@RequestBody AuthRequest authRequest)
     {
@@ -42,6 +47,12 @@ public class AuthController
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwtToken = jwtTokenUtils.generateJwtToken(authentication);
+
+        // just a workaround for logout - invalidate jwt
+        Token token = new Token();
+        token.setToken(jwtToken);
+        token.setValid(true);
+        tokenRepository.save(token);
 
         UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
         List<String> roles = principal.getAuthorities().stream()
@@ -57,7 +68,8 @@ public class AuthController
     @PostMapping("logout")
     public void logout()
     {
-        // TODO
+        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+        SecurityContextHolder.clearContext();
     }
 
     @GetMapping(value = "currentUser")

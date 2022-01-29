@@ -1,7 +1,8 @@
 package com.anda.user.auth.security.jwt;
 
+import com.anda.user.auth.model.Token;
+import com.anda.user.auth.repository.TokenRepository;
 import com.anda.user.auth.security.service.MyUserDetailsService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,6 +34,9 @@ public class JwtTokenRequestFilter extends OncePerRequestFilter
     @Autowired
     private MyUserDetailsService myUserDetailsService;
 
+    @Autowired
+    private TokenRepository tokenRepository;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException
     {
@@ -53,9 +57,27 @@ public class JwtTokenRequestFilter extends OncePerRequestFilter
 
     private void validateTokenAndSetAuthenticationData(HttpServletRequest request, String foundToken)
     {
-        if (jwtTokenUtils.isValidJwtToken(foundToken))
+        // in case of previous logout, this should not be reusable
+        Optional<Token> dbToken = tokenRepository.findByToken(foundToken);
+        var isValidAgainstDb = false;
+        if (dbToken.isPresent())
+        {
+            isValidAgainstDb = dbToken.get().isValid();
+        }
+
+        if (isValidAgainstDb && jwtTokenUtils.isValidJwtToken(foundToken))
         {
             buildAuthenticationUser(request, jwtTokenUtils.getUsernameFromJwtToken(foundToken));
+
+            // workaround to invalidate a jwt in case of logout (no session management)
+            // this is just a sample; should be used another mechanism (outh2, cache redis)
+            if (request.getRequestURI().contains("logout"))
+            {
+                // invalidate used token
+                Token dbTokenToInvalidate = tokenRepository.findByToken(foundToken).get();
+                dbTokenToInvalidate.setValid(false);
+                tokenRepository.save(dbTokenToInvalidate);
+            }
         }
     }
 
