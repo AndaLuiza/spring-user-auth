@@ -2,12 +2,17 @@ package com.anda.user.auth.controller;
 
 import com.anda.user.auth.dto.AuthRequest;
 import com.anda.user.auth.dto.UserInfoResponse;
-import com.anda.user.auth.model.RoleEnum;
+import com.anda.user.auth.security.jwt.JwtTokenUtils;
 import com.anda.user.auth.security.service.MyUserDetailsService;
 import com.anda.user.auth.security.service.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +28,30 @@ public class AuthController
     @Autowired
     private MyUserDetailsService userDetailsService;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenUtils jwtTokenUtils;
+
     @PostMapping("login")
-    public void authenticate(@RequestBody AuthRequest authRequest)
+    public ResponseEntity<UserInfoResponse> authenticate(@RequestBody AuthRequest authRequest)
     {
-        // TODO : authenticate, get user principal
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwtToken = jwtTokenUtils.generateJwtToken(authentication);
+
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+        List<String> roles = principal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new UserInfoResponse(jwtToken,
+                principal.getUsername(),
+                principal.getEmail(),
+                roles));
     }
 
     @PostMapping("logout")
@@ -35,17 +60,15 @@ public class AuthController
         // TODO
     }
 
-    @GetMapping(value = "user/{username}")
-    public UserInfoResponse loadUserDetails(@PathVariable String username)
+    @GetMapping(value = "currentUser")
+    public UserInfoResponse loadLoggedInUserDetails()
     {
-        // TODO : load user details
-        UserPrincipal principal = (UserPrincipal) userDetailsService.loadUserByUsername(username);
+        UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        List<RoleEnum> roles =  principal.getAuthorities()
-                .stream()
-                .map(grantedAuthority -> RoleEnum.valueOf(grantedAuthority.getAuthority()))
+        List<String> roles = principal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return new UserInfoResponse(principal.getUsername(), principal.getEmail(), roles);
+        return new UserInfoResponse("", principal.getUsername(), principal.getEmail(), roles);
     }
 }

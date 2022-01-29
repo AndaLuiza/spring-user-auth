@@ -1,18 +1,21 @@
 package com.anda.user.auth.dto;
 
-import com.anda.user.auth.model.RoleEnum;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserInfoResponse
 {
-    private String username;
+    private final String token;
 
-    private String email;
+    private String type = "Bearer";
 
-    private List<RoleEnum> roles;
+    private final String username;
+
+    private final String email;
+
+    private final List<String> roles;
 }

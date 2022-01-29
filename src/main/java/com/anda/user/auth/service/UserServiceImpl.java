@@ -5,6 +5,8 @@ import com.anda.user.auth.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService
@@ -12,6 +14,7 @@ public class UserServiceImpl implements UserService
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public User save(User user)
     {
         return userRepository.save(user);

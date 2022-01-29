@@ -24,6 +24,9 @@ import java.util.Optional;
 @Slf4j
 public class JwtTokenRequestFilter extends OncePerRequestFilter
 {
+    public static final String AUTHORIZATION = "Authorization";
+    public static final String BEARER = "Bearer ";
+
     @Autowired
     private JwtTokenUtils jwtTokenUtils;
 
@@ -69,8 +72,8 @@ public class JwtTokenRequestFilter extends OncePerRequestFilter
 
     private static Optional<String> getTokenFromRequestHeader(HttpServletRequest request)
     {
-        var authorizationHeader = request.getHeader("Authorization");
-        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer "))
+        var authorizationHeader = request.getHeader(AUTHORIZATION);
+        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith(BEARER))
         {
             return Optional.of(authorizationHeader.substring(7));
         }
