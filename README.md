@@ -1,7 +1,7 @@
 # spring-user-auth demo
 ### User Authentication application with SpringBoot and Spring Security with JWT
 
-- Provides an authentication mechanism based on user credentials saved in db
+- Provides a basic authentication mechanism based on user credentials saved in db
 - Password is encoded with Spring default encoder
 - When authenticated, new JWT token is generated
 - All the other requests besides /login must provide this Bearer token in the Authorization Header
