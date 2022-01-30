@@ -10,6 +10,14 @@
 - All endpoints are defined in the Controller: POST /login, POST /logout, GET /currentUser
 - Repository contains a postman collection + environment with several requests for all endpoints covering multiple scenarios
 
+###### - Java: 10
+###### - Spring Boot
+###### - Spring Security
+###### - Spring JPA
+###### - H2 in-memory database
+###### - jjwt
+###### - lombok
+
 Run the app locally using `mvn install` and then `mvn spring-boot:run` or directly from Intellij after importing the project.
 
 Send the requests from the postman collection.
@@ -33,11 +41,3 @@ will return the authenticated user details and the generated JWT token:
 "ROLE_USER"
 ]
 }`
-
-###### - Java: 10
-###### - Spring Boot
-###### - Spring Security
-###### - Spring JPA
-###### - H2 in-memory database
-###### - jjwt
-###### - lombok
