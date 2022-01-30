@@ -6,6 +6,7 @@
 - When authenticated, new JWT token is generated
 - All the other requests besides /login must provide this Bearer token in the Authorization Header
 - Role-based authorization
+- Error Handler with logging for unauthorized requests
 - 2 users and 3 roles are saved into db at application startup
 - All endpoints are defined in the Controller: POST /login, POST /logout, GET /currentUser
 - Repository contains a postman collection + environment with several requests for all endpoints covering multiple scenarios
