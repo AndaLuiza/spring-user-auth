@@ -9,6 +9,7 @@ import com.anda.user.auth.security.service.MyUserDetailsService;
 import com.anda.user.auth.security.service.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -72,7 +73,7 @@ public class AuthController
         SecurityContextHolder.clearContext();
     }
 
-    @GetMapping(value = "currentUser")
+    @GetMapping("currentUser")
     public UserInfoResponse loadLoggedInUserDetails()
     {
         UserPrincipal principal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -82,5 +83,17 @@ public class AuthController
                 .collect(Collectors.toList());
 
         return new UserInfoResponse("", principal.getUsername(), principal.getEmail(), roles);
+    }
+
+    @GetMapping("main")
+    @PreAuthorize("hasRole('USER') or hasRole('SUPER_USER')")
+    public String userAccess() {
+        return "Main";
+    }
+
+    @GetMapping("admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String adminAccess() {
+        return "Admin";
     }
 }

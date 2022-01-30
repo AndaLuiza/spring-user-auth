@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @SpringBootApplication
@@ -50,6 +51,12 @@ public class SpringUserAuthApplication implements CommandLineRunner
                 "test1@email.com",
                 Set.of(adminRole, userRole));
 
-        userServiceImpl.save(newUser);
+        User admin = new User(
+                "admin",
+                passwordEncoder.encode("admin"),
+                "admin@email.com",
+                Set.of(adminRole));
+
+        userServiceImpl.saveAll(List.of(newUser, admin));
     }
 }

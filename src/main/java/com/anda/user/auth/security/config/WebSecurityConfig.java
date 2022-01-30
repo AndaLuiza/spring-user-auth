@@ -1,13 +1,14 @@
 package com.anda.user.auth.security.config;
 
-import com.anda.user.auth.security.jwt.UnauthorizedJwtAuthHandler;
 import com.anda.user.auth.security.jwt.JwtTokenRequestFilter;
+import com.anda.user.auth.security.jwt.UnauthorizedJwtAuthHandler;
 import com.anda.user.auth.security.service.MyUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
@@ -30,7 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     private final UnauthorizedJwtAuthHandler unauthorizedHandler;
 
     @Bean
-    public JwtTokenRequestFilter jwtTokenRequestFilter() {
+    public JwtTokenRequestFilter jwtTokenRequestFilter()
+    {
         return new JwtTokenRequestFilter();
     }
 
