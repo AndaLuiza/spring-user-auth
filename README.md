@@ -14,7 +14,7 @@ Run the app locally using `mvn install` and then `mvn spring-boot:run` or direct
 
 Send the requests from the postman collection.
 
-Sending for example POST http://localhost:8080/api/auth/login with:
+Sending, for example, POST http://localhost:8080/api/auth/login with:
 
 `{
 "username": "user1",
