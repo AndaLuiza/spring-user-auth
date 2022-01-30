@@ -1,21 +1,39 @@
 package com.anda.user.auth.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class UserInfoResponse
 {
-    private final String token;
+    private String token;
 
     private String type = "Bearer";
 
-    private final String username;
+    private String username;
 
-    private final String email;
+    private String email;
 
-    private final List<String> roles;
+    private List<String> roles;
+
+    public UserInfoResponse(String token, String username, String email, List<String> roles)
+    {
+        this.token = token;
+        this.username = username;
+        this.email = email;
+        this.roles = roles;
+    }
+
+    public UserInfoResponse(String token, String type, String username, String email, List<String> roles)
+    {
+        this.token = token;
+        this.type = type;
+        this.username = username;
+        this.email = email;
+        this.roles = roles;
+    }
 }
