@@ -10,7 +10,7 @@
 - 2 users and 3 roles are saved into db at application startup
 - All endpoints are defined in the Controller: POST /login, POST /logout, GET /currentUser
 - Repository contains a postman collection + environment with several requests for all endpoints covering multiple scenarios:
-  - UserAuthentication.postman_collection.json + test.postman_environment.json
+  - `UserAuthentication.postman_collection.json` + `test.postman_environment.json`
 
 ###### - Java: 10
 ###### - Spring Boot
